@@ -3,12 +3,12 @@ DROP DATABASE IF EXISTS ssafy_urs;
 CREATE DATABASE ssafy_urs;
 USE ssafy_urs;
 
--- User 테이블
-CREATE TABLE `User` (
+-- users 테이블
+CREATE TABLE `Users` (
     `user_id` VARCHAR(255) NOT NULL,
     `password` VARCHAR(255) NOT NULL,
     `name` VARCHAR(100) NOT NULL,
-    `phone` VARCHAR(15) NOT NULL CHECK (`phone` REGEXP '^[0-9]{10,15}$'),
+    `phone` VARCHAR(15) NOT NULL,
     PRIMARY KEY (`user_id`)
 );
 
@@ -17,7 +17,7 @@ CREATE TABLE `Route` (
     `route_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `district_name` VARCHAR(100) NOT NULL,
     `theme_name` VARCHAR(50) NOT NULL,
-    `duration_time` SMALLINT UNSIGNED NOT NULL COMMENT '소요 시간(분 단위)',
+    `duration_time` INT UNSIGNED NOT NULL COMMENT '소요 시간(분 단위)',
     `image_url` VARCHAR(255) DEFAULT NULL COMMENT '대표 이미지 URL',
     `average_rating` DECIMAL(3, 2) DEFAULT 0 COMMENT '평균 평점',
     PRIMARY KEY (`route_id`)
@@ -31,7 +31,7 @@ CREATE TABLE `Completed_Route` (
     `middle_img_url` VARCHAR(255) DEFAULT NULL COMMENT '중간지점 이미지 경로',
     `ending_img_url` VARCHAR(255) DEFAULT NULL COMMENT '도착지 이미지 경로',
     PRIMARY KEY (`user_id`, `route_id`),
-    FOREIGN KEY (`user_id`) REFERENCES `User`(`user_id`),
+    FOREIGN KEY (`user_id`) REFERENCES `Users`(`user_id`),
     FOREIGN KEY (`route_id`) REFERENCES `Route`(`route_id`)
 );
 
@@ -41,7 +41,7 @@ CREATE TABLE `Bookmark` (
     `route_id` INT UNSIGNED NOT NULL,
     `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '북마크 생성 시간',
     PRIMARY KEY (`user_id`, `route_id`),
-    FOREIGN KEY (`user_id`) REFERENCES `User`(`user_id`),
+    FOREIGN KEY (`user_id`) REFERENCES `Users`(`user_id`),
     FOREIGN KEY (`route_id`) REFERENCES `Route`(`route_id`)
 );
 
@@ -51,15 +51,16 @@ CREATE TABLE `Review` (
     `user_id` VARCHAR(255) NOT NULL,
     `route_id` INT UNSIGNED NOT NULL,
     `reg_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `rating` TINYINT UNSIGNED NOT NULL CHECK (`rating` BETWEEN 0 AND 5) COMMENT '평점 (0~5)',
+    `rating` INT UNSIGNED NOT NULL CHECK (`rating` BETWEEN 0 AND 5) COMMENT '평점 (0~5)',
     PRIMARY KEY (`review_id`),
-    FOREIGN KEY (`user_id`) REFERENCES `User`(`user_id`),
+    FOREIGN KEY (`user_id`) REFERENCES `Users`(`user_id`),
     FOREIGN KEY (`route_id`) REFERENCES `Route`(`route_id`)
 );
 
 -- Point 테이블 (위치 정보 분리)
 CREATE TABLE `Point` (
     `point_id` INT NOT NULL AUTO_INCREMENT,
+    -- `point_name` VARCHAR(255) NOT NULL COMMENT '이름', 
     `latitude` DECIMAL(9, 6) NOT NULL COMMENT '위도',
     `longitude` DECIMAL(9, 6) NOT NULL COMMENT '경도',
     PRIMARY KEY (`point_id`)
@@ -69,7 +70,7 @@ CREATE TABLE `Point` (
 CREATE TABLE `Location` (
     `route_id` INT UNSIGNED NOT NULL,
     `point_id` INT NOT NULL,
-    `type` ENUM('starting', 'middle', 'ending') NOT NULL COMMENT '위치 유형',
+    `type` ENUM('STARTING', 'MIDDLE', 'ENDING') NOT NULL COMMENT '위치 유형',
     PRIMARY KEY (`route_id`, `point_id`, `type`),
     FOREIGN KEY (`route_id`) REFERENCES `Route`(`route_id`),
     FOREIGN KEY (`point_id`) REFERENCES `Point`(`point_id`)
@@ -104,7 +105,7 @@ END$$
 DELIMITER ;
 
 -- 더미데이터 삽입
-INSERT INTO `User` (`user_id`, `password`, `name`, `phone`) VALUES
+INSERT INTO `Users` (`user_id`, `password`, `name`, `phone`) VALUES
 ('user1', 'password1', 'Alice', '01012345678'),
 ('user2', 'password2', 'Bob', '01023456789'),
 ('user3', 'password3', 'Charlie', '01034567890'),
@@ -112,11 +113,16 @@ INSERT INTO `User` (`user_id`, `password`, `name`, `phone`) VALUES
 ('user5', 'password5', 'Eve', '01056789012');
 
 INSERT INTO `Route` (`district_name`, `theme_name`, `duration_time`, `image_url`, `average_rating`) VALUES
-('Seoul', 'Nature', 120, 'http://example.com/seoul_nature.jpg', 4.5),
-('Busan', 'Cityscape', 90, 'http://example.com/busan_cityscape.jpg', 3.8),
-('Jeju', 'Adventure', 180, 'http://example.com/jeju_adventure.jpg', 4.7),
-('Incheon', 'Historical', 60, 'http://example.com/incheon_historical.jpg', 4.1),
-('Daegu', 'Cultural', 75, 'http://example.com/daegu_cultural.jpg', 3.5);
+('종로구', 'CALMLY', 25, 'https://i.namu.wiki/i/BlYXTmnqSHYx28wBPfXxbPGsm8kMIJHlUCa-gtyLXVtTDVA9UkX8DlhLtpV8ZrAJjDmsrCqSQN2IPGApnbawVfCqOPiD2u9Hf7DIbMxAsz1MEvyVHknQTzsH10GQ-JGG5FLUq144CA5ufZ8IylgrBg.webp', 4.5),
+('중구', 'CALMLY', 90, 'http://example.com/busan_cityscape.jpg', 3.8),
+('용산구', 'ALONE', 180, 'http://example.com/jeju_adventure.jpg', 4.7),
+('동대문구', 'LIVELY', 60, 'http://example.com/incheon_historical.jpg', 4.1),
+('광진구', 'Cultural', 75, 'http://example.com/daegu_cultural.jpg', 3.5),
+('종로구', 'DEMURE', 120, 'http://example.com/seoul_nature.jpg', 4.5),
+('중구', 'CALMLY', 90, 'http://example.com/busan_cityscape.jpg', 3.8),
+('용산구', 'ALONE', 180, 'http://example.com/jeju_adventure.jpg', 4.7),
+('동대문구', 'LIVELY', 60, 'http://example.com/incheon_historical.jpg', 4.1),
+('광진구', 'Cultural', 75, 'http://example.com/daegu_cultural.jpg', 3.5);
 
 INSERT INTO `Review` (`user_id`, `route_id`, `reg_date`, `rating`) VALUES
 ('user1', 1, NOW(), 5),
@@ -147,6 +153,16 @@ INSERT INTO `Bookmark` (`user_id`, `route_id`, `created_at`) VALUES
 ('user5', 5, NOW());
 
 INSERT INTO `Point` (`latitude`, `longitude`) VALUES
+(37.577462, 126.991932), 
+(37.569737, 126.995222),
+(37.569348, 126.999860),
+(37.4563, 126.7052), -- Incheon
+(35.8714, 128.6014), -- Daegu
+(37.5665, 126.9780), -- Seoul
+(35.1796, 129.0756), -- Busan
+(33.4996, 126.5312), -- Jeju
+(37.4563, 126.7052), -- Incheon
+(35.8714, 128.6014), -- Daegu
 (37.5665, 126.9780), -- Seoul
 (35.1796, 129.0756), -- Busan
 (33.4996, 126.5312), -- Jeju
@@ -154,32 +170,23 @@ INSERT INTO `Point` (`latitude`, `longitude`) VALUES
 (35.8714, 128.6014); -- Daegu
 
 INSERT INTO `Location` (`route_id`, `point_id`, `type`) VALUES
-(1, 1, 'starting'),
-(2, 2, 'starting'),
-(3, 3, 'starting'),
-(4, 4, 'starting'),
-(5, 5, 'starting'),
-(1, 1, 'ending'),
-(2, 2, 'ending'),
-(3, 3, 'ending'),
-(4, 4, 'ending'),
-(5, 5, 'ending');
+(1, 1, 'STARTING'),
+(1, 2, 'MIDDLE'),
+(1, 3, 'STARTING'),
+(4, 4, 'STARTING'),
+(5, 5, 'STARTING'),
+(2, 6, 'MIDDLE'),
+(2, 7, 'MIDDLE'),
+(3, 8, 'MIDDLE'),
+(4, 9, 'MIDDLE'),
+(5, 10, 'MIDDLE'),
+(2, 11, 'ENDING'),
+(2, 12, 'ENDING'),
+(3, 13, 'ENDING'),
+(4, 14, 'ENDING'),
+(5, 15, 'ENDING');
 
--- 상위 10개 리뷰 가져오기
--- SELECT 
---     `route_id`,
---     `district_name`,
---     `theme_name`,
---     `duration_time`,
---     `image_url`,
---     `average_rating`
--- FROM 
---     `Route`
--- ORDER BY 
---     `average_rating` DESC
--- LIMIT 10;
-
-
+select * from Users;
 -- 더미 데이터 확인
 -- SELECT * FROM `Review`;
 -- SELECT * FROM `Completed_Route`;
