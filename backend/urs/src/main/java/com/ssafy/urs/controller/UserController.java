@@ -1,7 +1,8 @@
 package com.ssafy.urs.controller;
 
-import com.ssafy.urs.dto.PointDto;
-import com.ssafy.urs.service.PointService;
+import com.ssafy.urs.dto.UserDto;
+import com.ssafy.urs.entity.User;
+import com.ssafy.urs.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,16 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
-@RequestMapping("/api/points")
 @RequiredArgsConstructor
+@RequestMapping("/api/user")
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
-public class PointController {
-    private final PointService pointService;
+public class UserController {
+    private final UserService userService;
 
-    @GetMapping("/{pointId}")
-    public ResponseEntity<PointDto> getPointById(@PathVariable int pointId) {
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserDto> getUser(@PathVariable String userId) {
         try {
-            return ResponseEntity.ok(pointService.getPointById(pointId));
+            User user = userService.findUserById(userId);
+            return ResponseEntity.ok(new UserDto(user.getUserId(), user.getName(), user.getPhone()));
         } catch (RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }

@@ -10,7 +10,7 @@
     <nav class="nav-links">
       <RouterLink to="/home" class="nav-link">Home</RouterLink>
       <RouterLink to="/routes" class="nav-link">Route</RouterLink>
-      <RouterLink to="/mypage" class="nav-link">MyPage</RouterLink>
+      <RouterLink :to="`/mypage/${authStore.userId}`" class="nav-link">MyPage</RouterLink>
     </nav>
 
     <div>
