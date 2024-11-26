@@ -60,6 +60,7 @@ const getImage = async () => {
     }
   } else {
     alert('유효한 userId와 routeId가 필요합니다.');
+    router.push('/home');
   }
 };
 
