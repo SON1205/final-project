@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RouteRepository extends JpaRepository<Route, Integer> {
-    Route findByDistrictNameAndThemeNameAndDurationTimeLessThanEqual(String districtName, String themeName,
-                                                                     int durationTime);
+    Route findByDistrictNameAndThemeNameAndDurationTime(String districtName, String themeName,
+                                                        int durationTime);
 
     List<Route> findTop10ByOrderByAverageRatingDesc();
 }

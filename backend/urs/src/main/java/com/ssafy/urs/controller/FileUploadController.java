@@ -1,5 +1,7 @@
 package com.ssafy.urs.controller;
 
+import com.ssafy.urs.dto.CompletedRouteDto;
+import com.ssafy.urs.service.CompletedRouteService;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -29,12 +31,14 @@ import org.springframework.web.multipart.MultipartFile;
 @CrossOrigin(origins = "http://localhost:5173")
 public class FileUploadController {
 
+    private final CompletedRouteService completedRouteService;
+
     private final String UPLOAD_DIR = "C:\\Users\\sonjh\\Desktop\\workspace\\final-project\\uploadImg"; // 적절한 로컬 저장소 경로 설정
 
     @PostMapping("/upload/{userId}/{routeId}")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file,
                                              @PathVariable String userId,
-                                             @PathVariable String routeId) {
+                                             @PathVariable int routeId) {
         if (file.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("파일이 비어 있습니다.");
         }
@@ -48,6 +52,8 @@ public class FileUploadController {
             String uniqueFileName = userId + "_" + routeId + "_" + file.getOriginalFilename();
             Path filePath = uploadPath.resolve(uniqueFileName);
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            completedRouteService.createCompletedRoute(new CompletedRouteDto(userId, routeId, filePath.toString()));
 
             return ResponseEntity.status(HttpStatus.OK).body("파일이 성공적으로 업로드되었습니다: " + file.getOriginalFilename());
         } catch (IOException e) {

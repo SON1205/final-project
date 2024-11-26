@@ -31,7 +31,7 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public RouteDto getRoutesByCriteria(String districtName, String themeName, int durationTime) {
-        Route route = routeRepository.findByDistrictNameAndThemeNameAndDurationTimeLessThanEqual(districtName,
+        Route route = routeRepository.findByDistrictNameAndThemeNameAndDurationTime(districtName,
                 themeName, durationTime);
         if (route == null) {
             throw new RuntimeException("No routes found matching the criteria");

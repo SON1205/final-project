@@ -152,23 +152,23 @@ INSERT INTO `Review` (`user_id`, `route_id`, `reg_date`, `rating`) VALUES
 ('user1', 17, NOW(), 5);
 
 INSERT INTO `Completed_Route` (`user_id`, `route_id`, `middle_img_url`) VALUES
-('user2', 1, "C:\Users\sonjh\Desktop\workspace\final-project\uploadImg\user2_1_aaa.webp"),
-('user3', 1, "C:\Users\sonjh\Desktop\workspace\final-project\uploadImg\user3_1_aaaaa.webp"),
-('user4', 2, "C:\Users\sonjh\Desktop\workspace\final-project\uploadImg\user4_2_asdf.webp"),
-('user5', 2, "C:\Users\sonjh\Desktop\workspace\final-project\uploadImg\user5_2_asdfxc.webp"),
-('user1', 3, "C:\Users\sonjh\Desktop\workspace\final-project\uploadImg\user1_3_bbb.webp"),
-('user2', 3, "C:\Users\sonjh\Desktop\workspace\final-project\uploadImg\user2_3_ccc.webp"),
-('user3', 3, "C:\Users\sonjh\Desktop\workspace\final-project\uploadImg\user3_3_dddd.webp"),
-('user4', 4, "C:\Users\sonjh\Desktop\workspace\final-project\uploadImg\user4_4_dddd.webp"),
-('user5', 6, "C:\Users\sonjh\Desktop\workspace\final-project\uploadImg\user5_6_jilkbnvbcdder.webp"),
-('user1', 7, "C:\Users\sonjh\Desktop\workspace\final-project\uploadImg\user1_7_jilkbnvbcdder.webp"),
-('user2', 8, "C:\Users\sonjh\Desktop\workspace\final-project\uploadImg\user2_8_kjlh.webp"),
-('user1', 11, "C:\Users\sonjh\Desktop\workspace\final-project\uploadImg\user1_11_qterjhgf.webp"),
-('user1', 12, "C:\Users\sonjh\Desktop\workspace\final-project\uploadImg\user1_12_abc.webp"),
-('user1', 9, "C:\Users\sonjh\Desktop\workspace\final-project\uploadImg\user1_9_weq.webp"),
-('user1', 8, "C:\Users\sonjh\Desktop\workspace\final-project\uploadImg\user1_8_ccc.webp"),
-('user1', 14, "C:\Users\sonjh\Desktop\workspace\final-project\uploadImg\user1_14_kjlh.webp"),
-('user1', 17, "C:\Users\sonjh\Desktop\workspace\final-project\uploadImg\user1_17_aaaaa.webp");
+('user2', 1, "C:\\Users\\sonjh\\Desktop\\workspace\\final-project\\uploadImg\\user2_1_aaa.webp"),
+('user3', 1, "C:\\Users\\sonjh\\Desktop\\workspace\\final-project\\uploadImg\\user3_1_aaaaa.webp"),
+('user4', 2, "C:\\Users\\sonjh\\Desktop\\workspace\\final-project\\uploadImg\\user4_2_asdf.webp"),
+('user5', 2, "C:\\Users\\sonjh\\Desktop\\workspace\\final-project\\uploadImg\\user5_2_asdfxc.webp"),
+('user1', 3, "C:\\Users\\sonjh\\Desktop\\workspace\\final-project\\uploadImg\\user1_3_bbb.webp"),
+('user2', 3, "C:\\Users\\sonjh\\Desktop\\workspace\\final-project\\uploadImg\\user2_3_ccc.webp"),
+('user3', 3, "C:\\Users\\sonjh\\Desktop\\workspace\\final-project\\uploadImg\\user3_3_dddd.webp"),
+('user4', 4, "C:\\Users\\sonjh\\Desktop\\workspace\\final-project\\uploadImg\\user4_4_dddd.webp"),
+('user5', 6, "C:\\Users\\sonjh\\Desktop\\workspace\\final-project\\uploadImg\\user5_6_jilkbnvbcdder.webp"),
+('user1', 7, "C:\\Users\\sonjh\\Desktop\\workspace\\final-project\\uploadImg\\user1_7_jilkbnvbcdder.webp"),
+('user2', 8, "C:\\Users\\sonjh\\Desktop\\workspace\\final-project\\uploadImg\\user2_8_kjlh.webp"),
+('user1', 11, "C:\\Users\\sonjh\\Desktop\\workspace\\final-project\\uploadImg\\user1_11_qterjhgf.webp"),
+('user1', 12, "C:\\Users\\sonjh\\Desktop\\workspace\\final-project\\uploadImg\\user1_12_abc.webp"),
+('user1', 9, "C:\\Users\\sonjh\\Desktop\\workspace\\final-project\\uploadImg\\user1_9_weq.webp"),
+('user1', 8, "C:\\Users\\sonjh\\Desktop\\workspace\\final-project\\uploadImg\\user1_8_ccc.webp"),
+('user1', 14, "C:\\Users\\sonjh\\Desktop\\workspace\\final-project\\uploadImg\\user1_14_kjlh.webp"),
+('user1', 17, "C:\\Users\\sonjh\\Desktop\\workspace\\final-project\\uploadImg\\user1_17_aaaaa.webp");
 
 INSERT INTO `Bookmark` (`user_id`, `route_id`, `created_at`) VALUES
 ('user1', 2, NOW()),
@@ -285,7 +285,7 @@ INSERT INTO `Location` (`route_id`, `point_id`, `type`) VALUES
 select * from Users;
 -- 더미 데이터 확인
 -- SELECT * FROM `Review`;
--- SELECT * FROM `Completed_Route`;
+SELECT * FROM `Completed_Route`; 
 -- SELECT * FROM `Bookmark`;
 -- SELECT * FROM `Point`;
 -- SELECT * FROM `Location`;
