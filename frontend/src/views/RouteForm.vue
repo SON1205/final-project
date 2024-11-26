@@ -144,6 +144,9 @@ async function loadWeatherData() {
       },
     });
 
+    console.log(nx);
+    console.log(ny);
+
     const items = response.data.response.body.items.item;
 
     items.forEach((item) => {

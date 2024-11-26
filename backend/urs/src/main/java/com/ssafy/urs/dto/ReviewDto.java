@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReviewDto {
-    private int reviewId;
     private String userId;
     private int routeId;
     private LocalDateTime regDate;

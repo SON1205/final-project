@@ -69,6 +69,7 @@ const fetchRouteInfo = async () => {
     });
     route.value = response.data; // 경로 정보 저장
     routeId.value = route.value.routeId; // Route ID 동적 설정
+    formStore.selectedRoute = route.value.routeId;
 
     // 로케이션 및 포인트 정보 가져오기
     const locationResponse = await axios.get(`/api/locations/route/${routeId.value}`);
@@ -87,7 +88,9 @@ const fetchRouteInfo = async () => {
         // 'MIDDLE' 타입일 경우 추가 처리
         if (location.type === 'MIDDLE') {
           centerLatitude.value = pointData.latitude;
+          formStore.centerLatitude = pointData.latitude;
           centerLongitude.value = pointData.longitude;
+          formStore.centerLongitude = pointData.longitude;
         }
 
         return pointData;

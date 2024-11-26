@@ -32,6 +32,15 @@ public class ReviewController {
         }
     }
 
+    @GetMapping("searchby/{userId}")
+    public ResponseEntity<List<ReviewDto>> getReviewsByUserId(@PathVariable String userId) {
+        try {
+            return ResponseEntity.ok(reviewService.getReviewByUserId(userId));
+        } catch (RuntimeException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
     @GetMapping("/route/{routeId}")
     public ResponseEntity<List<ReviewDto>> getAllReviewsByRoute(@PathVariable int routeId) {
         return ResponseEntity.ok(reviewService.getAllReviewsByRoute(routeId));

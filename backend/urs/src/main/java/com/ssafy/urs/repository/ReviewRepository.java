@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
     List<Review> findAllByRouteId(int routeId);
+
+    List<Review> findAllByUserId(String userId);
 }

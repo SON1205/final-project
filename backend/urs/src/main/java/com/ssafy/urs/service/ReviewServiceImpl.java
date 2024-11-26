@@ -17,14 +17,14 @@ public class ReviewServiceImpl implements ReviewService {
     public ReviewDto getReviewById(int reviewId) {
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new RuntimeException("Review not found"));
-        return new ReviewDto(review.getReviewId(), review.getUserId(), review.getRouteId(), review.getRegDate(),
+        return new ReviewDto(review.getUserId(), review.getRouteId(), review.getRegDate(),
                 review.getRating());
     }
 
     @Override
     public List<ReviewDto> getAllReviewsByRoute(int routeId) {
         return reviewRepository.findAllByRouteId(routeId).stream()
-                .map(review -> new ReviewDto(review.getReviewId(), review.getUserId(), review.getRouteId(),
+                .map(review -> new ReviewDto(review.getUserId(), review.getRouteId(),
                         review.getRegDate(), review.getRating()))
                 .collect(Collectors.toList());
     }
@@ -35,5 +35,13 @@ public class ReviewServiceImpl implements ReviewService {
                 reviewDto.getRating());
         reviewRepository.save(review);
         return reviewDto;
+    }
+
+    @Override
+    public List<ReviewDto> getReviewByUserId(String userId) {
+        return reviewRepository.findAllByUserId(userId).stream()
+                .map(review -> new ReviewDto(review.getUserId(), review.getRouteId(),
+                        review.getRegDate(), review.getRating()))
+                .collect(Collectors.toList());
     }
 }

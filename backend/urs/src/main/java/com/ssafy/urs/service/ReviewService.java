@@ -9,6 +9,8 @@ public interface ReviewService {
     List<ReviewDto> getAllReviewsByRoute(int routeId);
 
     ReviewDto createReview(ReviewDto reviewDto);
+
+    List<ReviewDto> getReviewByUserId(String userId);
 //    ReviewDto updateReview(Long reviewId, ReviewDto reviewDto);
 //    void deleteReview(Long reviewId);
 }

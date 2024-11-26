@@ -43,6 +43,9 @@ export const useFormStore = defineStore('form', {
     selectedDistrict: null,
     selectedStep1: null,
     selectedStep2: null,
+    selectedRoute: null,
+    centerLatitude: null,
+    centerLongitude: null,
   }),
   getters: {
     // 선택된 지역의 grid 좌표 반환

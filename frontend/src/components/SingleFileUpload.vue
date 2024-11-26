@@ -9,7 +9,7 @@
       <label for="file-input">
         <img :src="previewUrl || placeholderImage" alt="Upload Preview" class="upload-preview" />
       </label>
-      <input id="file-input" type="file" @change="handleFileChange" accept="image/*" />
+      <input id="file-input" type="file" @change="onFileChange" accept="image/*" />
       <button @click="uploadFile">Upload</button>
     </div>
   </div>
@@ -17,6 +17,14 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import axios from "axios";
+import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
+import { useFormStore } from "@/stores/form";
+
+const authStore = useAuthStore();
+const formStore = useFormStore();
+const router = useRouter();
 
 const props = defineProps({
   latitude: {
@@ -53,8 +61,6 @@ function initStreetView() {
       zoom: 1,
     }
   );
-
-  mapId.setStreetView(panorama);
 }
 
 onMounted(() => {
@@ -71,15 +77,17 @@ onMounted(() => {
 });
 
 // 파일 선택 처리
-function handleFileChange(event) {
+const onFileChange = (event) => {
   file.value = event.target.files[0];
   if (file.value) {
     previewUrl.value = URL.createObjectURL(file.value);
+  } else {
+    previewUrl.value = null;
   }
-}
+};
 
 // 파일 업로드 처리
-function uploadFile() {
+const uploadFile = async () => {
   if (!file.value) {
     alert("Please select a file first.");
     return;
@@ -88,17 +96,22 @@ function uploadFile() {
   const formData = new FormData();
   formData.append("file", file.value);
 
-  fetch(props.uploadUrl, {
-    method: "POST",
-    body: formData,
-  })
-    .then((response) => response.json())
-    .then(() => {
-      alert("File uploaded successfully!");
-    })
-    .catch(() => {
-      alert("File upload failed.");
+  const userId = authStore.userId;
+  const routeId = formStore.selectedRoute;
+
+  try {
+    const response = await axios.post(`/api/files/upload/${userId}/${routeId}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     });
+    alert("File uploaded successfully!");
+
+    router.push("/review");
+  } catch (error) {
+    console.error('파일 업로드 중 오류 발생:', error);
+    alert("File upload failed.");
+  }
 }
 </script>
 

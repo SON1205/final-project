@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <p>&copy; 2024 My App. All rights reserved.</p>
+    <p>&copy; 2024 URS. All rights reserved.</p>
   </footer>
 </template>
 
