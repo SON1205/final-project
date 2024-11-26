@@ -63,6 +63,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
+img {
+  padding: 5px 5px;
+}
+
 .rate {
   margin-top: 10px;
   margin-left: 3px;

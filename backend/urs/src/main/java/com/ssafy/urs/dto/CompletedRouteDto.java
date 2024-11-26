@@ -10,7 +10,5 @@ import lombok.NoArgsConstructor;
 public class CompletedRouteDto {
     private String userId;
     private int routeId;
-    private String startingImgUrl;
     private String middleImgUrl;
-    private String endingImgUrl;
 }

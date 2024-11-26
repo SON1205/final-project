@@ -17,12 +17,6 @@ public class CompletedRoute {
     @EmbeddedId
     private CompletedRouteId id;
 
-    @Column(name = "starting_img_url")
-    private String startingImgUrl;
-
     @Column(name = "middle_img_url")
     private String middleImgUrl;
-
-    @Column(name = "ending_img_url")
-    private String endingImgUrl;
 }

@@ -19,15 +19,14 @@ public class CompletedRouteServiceImpl implements CompletedRouteService {
         CompletedRoute completedRoute = completedRouteRepository.findById(new CompletedRouteId(userId, routeId))
                 .orElseThrow(() -> new RuntimeException("Completed route not found"));
         return new CompletedRouteDto(completedRoute.getId().getUserId(), completedRoute.getId().getRouteId(),
-                completedRoute.getStartingImgUrl(), completedRoute.getMiddleImgUrl(), completedRoute.getEndingImgUrl());
+                completedRoute.getMiddleImgUrl());
     }
 
     @Override
     public List<CompletedRouteDto> getAllCompletedRoutesByUser(String userId) {
         return completedRouteRepository.findAllByUserId(userId).stream()
                 .map(completedRoute -> new CompletedRouteDto(completedRoute.getId().getUserId(),
-                        completedRoute.getId().getRouteId(), completedRoute.getStartingImgUrl(),
-                        completedRoute.getMiddleImgUrl(), completedRoute.getEndingImgUrl()))
+                        completedRoute.getId().getRouteId(), completedRoute.getMiddleImgUrl()))
                 .collect(Collectors.toList());
     }
 
@@ -35,8 +34,7 @@ public class CompletedRouteServiceImpl implements CompletedRouteService {
     public CompletedRouteDto createCompletedRoute(CompletedRouteDto completedRouteDto) {
         CompletedRoute completedRoute = new CompletedRoute(
                 new CompletedRouteId(completedRouteDto.getUserId(), completedRouteDto.getRouteId()),
-                completedRouteDto.getStartingImgUrl(), completedRouteDto.getMiddleImgUrl(),
-                completedRouteDto.getEndingImgUrl());
+                completedRouteDto.getMiddleImgUrl());
         completedRouteRepository.save(completedRoute);
         return completedRouteDto;
     }
