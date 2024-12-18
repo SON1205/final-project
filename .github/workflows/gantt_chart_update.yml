@@ -2,7 +2,7 @@ name: Update Gantt Chart
 
 on:
   schedule:
-    - cron: '45 23 * * *'  # 매일 8시 45분에 실행 (UTC 기준으로는 23시 45분)
+    # - cron: '45 23 * * *'  # 매일 8시 45분에 실행 (UTC 기준으로는 23시 45분)
   workflow_dispatch:
 
 jobs:
